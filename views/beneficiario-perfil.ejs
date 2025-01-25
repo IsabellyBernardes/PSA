@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Beneficiário</title>
+    <link rel="stylesheet" href="/static/beneficiario-perfil.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <button onclick="window.location.href='/'" class="logo-btn">
+                <img src="/static/LogoPSAPE.png" alt="Logo" class="logo-image">
+            </button>
+            <span class="logo-text">PSA - Sistema de Apoio</span>
+        </div>
+        <div class="navbar-right">
+            <button class="btn-sair">Sair</button>
+        </div>
+    </div>
+
+    <main>
+        <div class="form-container">
+            <h1>Perfil do Beneficiário</h1>
+            <div class="info">
+                <p><strong>Nome completo:</strong>
+                <%= usuario.nome %>
+            </p>
+            <p><strong>Email:</strong>
+                <%= usuario.email %>
+            </p>
+            <% if (usuario.telefone) { %>
+                <p><strong>Telefone:</strong>
+                    <%= usuario.telefone %>
+                </p>
+                <% } %>
+
+            </div>
+            
+                    <% if (carData) { %>
+                        <h2>Formulário submetido</h2>
+                        <table>
+                            <tr>
+                                <th>Número do CAR</th>
+                                <th>Arquivo ZIP</th>
+                                <th>Status da Submissão</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%= carData.car_number %>
+                                </td>
+                                <td><a href="<%= carData.car_file %>" target="_blank">Visualizar</a></td>
+                                <td>
+                                    <%= carData.status %>
+                                </td>
+
+                            </tr>
+                        </table>
+                        <a href="/car_form" class="form-btn">Preencher Formulário</a>
+                        <% } else { %>
+                            <h2>Participar do Projeto PSA</h2>
+                            <p>Sem pedidos a serem exibidos, pois você ainda não preencheu o formulário. Clique no botão abaixo para se candidatar
+                                e participar.</p>
+                            <a href="/car_form" class="form-btn">Preencher Formulário</a>
+                            <% } %>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Projeto PSA. Todos os direitos reservados.</p>
+            <p>Desenvolvido por <a href="#">Isabelly Bernardes</a></p>
+        </div>
+    </footer>
+</body>
+
+</html>

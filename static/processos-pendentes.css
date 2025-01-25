@@ -1,0 +1,115 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.navbar {
+    background-color: #90ee90;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-links {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .btn {
+    margin-left: 15px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar .btn:hover {
+    background-color: #45a049;
+}
+
+.form-container {
+    width: 80%;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.btn {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+.logo {
+    display: flex;
+    /* Alinha os itens lado a lado */
+    align-items: center;
+    /* Centraliza verticalmente a imagem e o texto */
+    gap: 10px;
+    /* Espaço entre a logo e o texto */
+}
+
+.logo .logo-image {
+    height: 100%;
+    /* Ajusta a altura da logo */
+    max-height: 50px;
+    /* Define a altura máxima da logo */
+    width: auto;
+    /* Mantém a proporção da imagem */
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    /* Tamanho do texto da logo */
+    font-weight: bold;
+    /* Deixa o texto mais destacado */
+    color: #000000;
+    /* Cor do texto (ajustável conforme necessário) */
+}
+
+.logo-btn {
+    background: none;
+    border: none;
+}

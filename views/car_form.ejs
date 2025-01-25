@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+    <link rel="stylesheet" href="/static/car_form.css"> <!-- Você pode reutilizar o mesmo arquivo CSS -->
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <button onclick="window.location.href='/'" class="logo-btn">
+                    <img src="/static/LogoPSAPE.png" alt="Minha Logo" class="logo-image">
+                </button>
+                <span class="logo-text">PSA</span>
+            </div>
+            <div class="navbar-links">
+                <button onclick="window.location.href='/beneficiario-perfil'" class="signup-button">Acessar perfil</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <h2>Cadastro de Propriedade</h2>
+            <!-- O formulário que será enviado para a rota /saveCarData -->
+            <form action="/saveCarData" method="POST" enctype="multipart/form-data">
+                <div class="input-group">
+                    <label for="carNumber">Número do CAR</label>
+                    <!-- Aqui, o nome do input permanece igual -->
+                    <input type="text" id="carNumber" name="carNumber" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="carFile">Arquivo ZIP</label>
+                    <!-- O input para o arquivo ZIP -->
+                    <input type="file" id="carFile" name="carFile" accept=".zip" required>
+                </div>
+
+                <button type="submit" class="btn">Salvar</button>
+            </form>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Projeto PSA. Todos os direitos reservados.</p>
+            <p>Desenvolvido por <a href="#">Isabelly Bernardes</a></p>
+        </div>
+    </footer>
+</body>
+</html>

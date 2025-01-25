@@ -1,0 +1,234 @@
+/* Estilização da Navbar */
+.navbar {
+    background-color: #90ee90; /* Verde claro */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between; /* Espaço entre os itens */
+    align-items: center; /* Alinha os itens verticalmente */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky; /* Mantém a navbar fixa */
+    top: 0; /* Fixa no topo da tela */
+    z-index: 1000; /* Garante que a navbar fique acima de outros elementos */
+    flex-wrap: nowrap; /* Garante que os itens fiquem em uma linha */
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaço entre o logo e o texto */
+}
+
+.navbar-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar-right .btn-sair {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.navbar-right .btn-sair:hover {
+    background-color: #45a049;
+}
+
+.logo-image {
+    width: 40px;
+    height: 40px;
+}
+
+.logo {
+    display: flex;
+    /* Alinha os itens lado a lado */
+    align-items: center;
+    /* Centraliza verticalmente a imagem e o texto */
+    gap: 10px;
+    /* Espaço entre a logo e o texto */
+}
+
+.logo .logo-image {
+    height: 100%;
+    /* Ajusta a altura da logo */
+    max-height: 50px;
+    /* Define a altura máxima da logo */
+    width: auto;
+    /* Mantém a proporção da imagem */
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    /* Tamanho do texto da logo */
+    font-weight: bold;
+    /* Deixa o texto mais destacado */
+    color: #000000;
+    /* Cor do texto (ajustável conforme necessário) */
+}
+
+.logo-btn {
+    background: none;
+    border: none;
+}
+
+/* Estilização do perfil */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px); /* Subtrai a altura da navbar */
+    background-color: #f9f9f9;
+}
+
+.info {
+    align-content: center;
+    margin-bottom: 50px;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.form-container h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.form-btn {
+    display: inline-block; /* Para garantir que o botão respeite o alinhamento */
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 20px 0; /* Espaço acima e abaixo do botão */
+    text-decoration: none; /* Remove sublinhado, caso seja um link */
+}
+
+.form-btn:hover {
+    background-color: #45a049;
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.table-container {
+    overflow-x: auto; /* Adiciona rolagem horizontal quando necessário */
+    margin-top: 20px;
+}
+
+table {
+    width: 100%; /* Garante que a tabela ocupe o máximo do container */
+    border-collapse: collapse;
+    margin-top: 10px;
+    table-layout: fixed; /* Garante que as colunas se ajustem */
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    word-wrap: break-word; /* Quebra o texto que ultrapassar o tamanho */
+}
+
+table th {
+    background-color: #6cbd6c;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+.btn {
+    border: none;
+    background: none;
+    color: #333;
+    /* Cor do texto */
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background-color: #76c776;
+    /* Fundo verde ao passar o mouse */
+    color: #fff;
+    /* Cor do texto ao passar o mouse */
+}
+
+.footer {
+    background-color: #90ee90; /* Mesmo verde da navbar */
+    color: #333; /* Texto com boa visibilidade */
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 20px; /* Espaçamento do conteúdo principal */
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto; /* Centraliza o conteúdo */
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Ajustes adicionais para dispositivos móveis */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px; /* Reduz o espaçamento geral */
+    }
+
+    .logo-text {
+        font-size: 0.9rem; /* Reduz o tamanho da fonte */
+    }
+
+    .navbar-left {
+        gap: 5px; /* Reduz o espaço entre a imagem e o texto */
+    }
+
+    .navbar-right .btn-sair {
+        font-size: 0.9rem; /* Ajusta o tamanho do botão */
+        padding: 8px 12px;
+    }
+    .table-container {
+        margin: 0; /* Remove margens laterais para se ajustar melhor */
+    }
+
+    table th, table td {
+        font-size: 0.9rem; /* Reduz o tamanho do texto */
+        padding: 8px; /* Reduz o espaçamento */
+    }
+}

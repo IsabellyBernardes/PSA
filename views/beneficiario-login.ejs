@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Beneficiário</title>
+    <link rel="stylesheet" href="/static/login.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <button onclick="window.location.href='/'" class="logo-btn"><img src="/static/LogoPSAPE.png" alt="Minha Logo" class="logo-image"></button>
+            <span class="logo-text">PSA</span>
+        </div>
+    </nav>
+    <main>
+        <div class="form-container">
+            <h1>Entrar como beneficiário</h1>
+
+            <!-- Mostrar erro, se houver -->
+            <% if (typeof error !== 'undefined') { %>
+                <script>
+                    alert('<%= error %>');
+                </script>
+            <% } %>
+
+            <form action="/login/beneficiario" method="POST">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" required>
+
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Projeto PSA. Todos os direitos reservados.</p>
+            <p>Desenvolvido por <a href="#">Isabelly Bernardes</a></p>
+        </div>
+    </footer>
+</body>
+</html>

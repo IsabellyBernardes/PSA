@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processos Pendentes</title>
+    <link rel="stylesheet" href="/static/processos-pendentes.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <button onclick="window.location.href='/templates/index.html'" class="logo-btn"><img src="/static/LogoPSAPE.png" alt="Minha Logo" class="logo-image"></button>
+            <span class="logo-text">PSA Sistema</span>
+        </div>
+        <div class="navbar-links">
+            <a href="/" class="btn">Início</a>
+            <a href="/processos-pendentes" class="btn">Processos Pendentes</a>
+            <a href="/avaliador" class="btn">Avaliar</a>
+        </div>
+    </div>
+
+    <!-- Tabela de Processos Pendentes -->
+    <div class="form-container">
+        <h2>Processos Pendentes para Avaliação</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Número do CAR</th>
+                    <th>Status</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% processos.forEach(function(processo) { %>
+                    <tr>
+                        <td><%= processo.car_number %></td>
+                        <td><%= processo.status %></td>
+                        <td>
+                            <a href="/avaliador/<%= processo.car_number %>" class="btn">Avaliar</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

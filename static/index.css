@@ -1,0 +1,191 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo geral do body */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #90ee90; /* Verde claro */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky; /* Mantém a navbar fixa */
+    top: 0; /* Fixa no topo da tela */
+    z-index: 1000; /* Garante que a navbar fique acima de outros elementos */
+}
+
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap; /* Permite ajustar os itens quando necessário */
+}
+
+.navbar-links {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo .logo-image {
+    height: 100%;
+    max-height: 50px;
+    width: auto;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000000;
+}
+
+.logo-btn {
+    background: none;
+    border: none;
+}
+
+.btn-link,
+.signup-button {
+    border: none;
+    background: none;
+    color: #333;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btn-link:hover {
+    background-color: #76c776;
+    color: #fff;
+}
+
+.signup-button {
+    background-color: #3a803a;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.signup-button:hover {
+    background-color: #4cae4c;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo do conteúdo principal */
+.content {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.content h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.content p {
+    font-size: 1.2rem;
+    color: #555;
+    text-align: justify; /* Texto justificado */
+    max-width: 800px; /* Limita a largura do texto */
+    margin: 20px auto; /* Centraliza o texto e adiciona espaçamento acima e abaixo */
+    line-height: 1.8; /* Melhora o espaçamento entre linhas */
+}
+
+.content .image img {
+    width: 100%; /* Ajusta para ocupar toda a largura disponível */
+    max-width: 1200px; /* Limita o tamanho máximo da largura */
+    max-height: 450px; /* Aumenta a altura máxima para não comprimir tanto a imagem */
+    height: auto; /* Mantém a proporção */
+    margin: 20px auto; /* Centraliza e adiciona margem vertical */
+    display: block;
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra para destaque */
+}
+
+.footer {
+    background-color: #90ee90; /* Mesmo verde da navbar */
+    color: #333; /* Texto com boa visibilidade */
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 20px; /* Espaçamento do conteúdo principal */
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto; /* Centraliza o conteúdo */
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-wrap: nowrap; /* Evita quebra de linha na navbar */
+    }
+
+    .navbar-links {
+        flex-direction: row; /* Mantém os itens lado a lado */
+        gap: 10px;
+        margin-top: 0;
+    }
+
+    .btn-link,
+    .signup-button {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .content .image img {
+        max-height: 200px; /* Reduz altura da imagem em dispositivos móveis */
+        margin: 10px auto;
+    }
+
+    .content p {
+        font-size: 1rem; /* Reduz tamanho do texto no mobile */
+        max-width: 90%; /* Ajusta largura do texto no mobile */
+    }
+
+    .footer {
+        padding: 15px 5px;
+        font-size: 0.8rem;
+    }
+}
