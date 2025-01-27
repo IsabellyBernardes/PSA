@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliador - Visualização de CAR</title>
+    <link rel="stylesheet" href="/static/avaliador-perfil.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <button onclick="window.location.href='/'" class="logo-btn">
+                    <img src="/static/LogoPSAPE.png" alt="Logo" class="logo-image">
+                </button>
+                <span class="logo-text">PSA Avaliação</span>
+            </div>
+            <div class="navbar-links">
+                <button class="btn-link">Home</button>
+                <button class="signup-button">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tabela com Avaliações para Analisar -->
+    <div class="form-container">
+        <h2>Avaliação do CAR Número: <%= carData ? carData.car_number : 'Não disponível' %></h2>
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>CAR Número</th>
+                    <th>Arquivo</th>
+                    <th>Visualizar propriedade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% requests.forEach(request => { %>
+                    <tr>
+                        <td><%= request.car_number %></td>
+                        <td><a href="<%= request.file_path %>" target="_blank">Baixar Arquivo</a></td>
+                        <td><button onclick="window.location.href='/map'" class="map"><p>Ver</p></button></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        
+
+        <!-- Formulário de Comentários e Status -->
+        <form id="evaluationForm">
+            <div class="input-group">
+                <label for="carNumber">Número do CAR</label>
+                <input type="text" id="carNumber" name="carNumber" value="<%= carData.car_number %>" readonly>
+            </div>
+            <div class="input-group">
+                <label for="comentarios">Comentários</label>
+                <textarea id="comentarios" name="comentarios" rows="4"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="status">Status da Avaliação</label>
+                <select id="status" name="status">
+                    <option value="em_analise">Em análise</option>
+                    <option value="aprovado">Aprovado</option>
+                    <option value="rejeitado">Rejeitado</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">Salvar Avaliação</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('evaluationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const carNumber = document.getElementById('carNumber').value;
+            const status = document.getElementById('status').value;
+            const comentarios = document.getElementById('comentarios').value;
+
+            fetch(`/avaliar/${carNumber}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ carNumber, status, comentarios })
+            })
+            .then(response => response.json())
+            .then(data => alert('Avaliação salva com sucesso'))
+            .catch(error => alert('Erro ao salvar avaliação'));
+        });
+    </script>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Projeto PSA. Todos os direitos reservados.</p>
+            <p>Desenvolvido por <a href="#">Isabelly Bernardes</a></p>
+        </div>
+    </footer>
+</body>
+</html>
