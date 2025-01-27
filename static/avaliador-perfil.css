@@ -197,4 +197,30 @@ button.btn-submit:hover {
     border-radius: 5px;
     cursor: pointer;
     align-content: center;
+
+}
+
+.footer {
+    background-color: #90ee90; /* Mesmo verde da navbar */
+    color: #333; /* Texto com boa visibilidade */
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 20px; /* Espaçamento do conteúdo principal */
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto; /* Centraliza o conteúdo */
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
 }

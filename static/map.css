@@ -1,0 +1,191 @@
+/* Estilos para o corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Navbar verde */
+header {
+    color: white;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* Estilo para o título */
+h1 {
+    font-size: 28px;
+    text-align: center;
+    color: #333;
+    padding-top: 20px; /* Espaço acima do título */
+}
+
+/* Estilização da Navbar */
+.navbar {
+    background-color: #90ee90; /* Cor de fundo verde claro */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Logo na Navbar */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo .logo-image {
+    height: 40px; /* Tamanho ajustado da logo */
+    width: auto;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000000; /* Cor do texto da logo */
+}
+
+.logo-btn {
+    background: none;
+    border: none;
+}
+
+/* Links na Navbar */
+.navbar-links {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+}
+
+.navbar .btn-link,
+.navbar .signup-button {
+    border: none;
+    background: none;
+    color: #333;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.navbar .btn-link:hover {
+    background-color: #76c776;
+    color: #fff;
+}
+
+.navbar .signup-button {
+    background-color: #3a803a;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.navbar .signup-button:hover {
+    background-color: #4cae4c;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Contêiner para o mapa e a box de informações */
+#map-container {
+    display: flex; 
+    flex-direction: row; /* Coloca o mapa e a box lado a lado */
+    justify-content: flex-start; 
+    gap: 20px; /* Adiciona um espaçamento entre a caixa de informações e o mapa */
+    padding: 20px;
+}
+
+/* Estilo para a caixa de informações */
+#info-box {
+    width: 20%; /* Caixa de informações ocupa 30% da largura da tela */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ddd;
+    height: 600px;
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+#info-box h3 {
+    margin-top: 0;
+    color: #28a745; /* Cor verde */
+}
+
+#info-box p {
+    margin: 10px 0;
+}
+
+/* Estilo para o mapa */
+#map {
+    width: 90%; 
+    height: 600px; /* Altura do mapa */
+    border: 1px solid #ddd;
+}
+
+/* Estilo do botão */
+/* Centralizar o botão de Nova Consulta */
+button {
+    display: block;
+    margin: 20px auto; /* Centraliza o botão com uma margem superior e inferior */
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 200px; /* Define um tamanho fixo para o botão */
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.footer {
+    background-color: #90ee90; /* Mesmo verde da navbar */
+    color: #333; /* Texto com boa visibilidade */
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 20px; /* Espaçamento do conteúdo principal */
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto; /* Centraliza o conteúdo */
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}

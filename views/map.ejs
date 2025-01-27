@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Mapa - Estado e Municípios</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/map.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/shapefile@0.6.6/dist/shapefile.min.js"></script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                
+                <img src="/static/LogoPSAPE.png" alt="Logo" class="logo-image">
+                <span class="logo-text">Análise de Imóveis</span>
+            </div>
+            
+        </div>
+    </div>
+    <header>
+        <h1>Mapa para Análise de Imóvel</h1>
+    </header>
+
+    <div id="map-container">
+        <div id="info-box">
+            <h3>Informações da Propriedade</h3>
+            <p><strong>CAR:</strong> <span id="CAR">....</span></p>
+            <p><strong>Estado:</strong> <span id="estado">...</span></p>
+            <p><strong>Município:</strong> <span id="municipio">...</span></p>
+            <p><strong>Outras informações:</strong> <span id="outras-informacoes">...</span></p>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <button onclick="novaConsulta()">Voltar</button>
+
+    <script>
+        var map = L.map('map').setView([-14.2350, -51.9253], 4);  // Inicializa o mapa com visão do Brasil
+
+        // Adiciona a camada de mapa (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Função para carregar os dados do Estado
+        async function loadStateShapefile(directory) {
+            const stateFile = 'BR_UF_2023/BR_UF_2023.shp';  // Caminho do shapefile para os Estados
+            console.log('Carregando arquivo do Estado:', stateFile);
+
+            try {
+                const stateBuffer = await fetch(`${directory}/${stateFile}`).then(response => response.arrayBuffer());
+                const geojson = await shapefile.read(stateBuffer);
+
+                if (geojson.features && geojson.features.length > 0) {
+                    var geoJsonLayer = L.geoJson(geojson, {
+                        style: { fillColor: '#007bff', weight: 2, fillOpacity: 0.5 }
+                    }).addTo(map);
+                    map.fitBounds(geoJsonLayer.getBounds());
+
+                    geoJsonLayer.on('click', function(e) {
+                        var estado = e.layer.feature.properties.sigla;
+                        document.getElementById('estado').innerText = estado;
+                        loadMunicipalityShapefile(directory, estado); // Carrega os Municípios quando um Estado for clicado
+                    });
+                } else {
+                    console.error('Nenhuma feição encontrada no shapefile dos Estados.');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar o shapefile dos Estados:', error);
+            }
+        }
+
+        // Função para carregar os dados dos Municípios de um Estado
+        async function loadMunicipalityShapefile(directory, estado) {
+            const municipalityFile = `BR_Municipios_2023/${estado}.shp`;  // Caminho do shapefile dos Municípios
+            console.log('Carregando arquivo dos Municípios:', municipalityFile);
+
+            try {
+                const municipalityBuffer = await fetch(`${directory}/${municipalityFile}`).then(response => response.arrayBuffer());
+                const geojson = await shapefile.read(municipalityBuffer);
+
+                if (geojson.features && geojson.features.length > 0) {
+                    var geoJsonLayer = L.geoJson(geojson, {
+                        style: { fillColor: '#ff7800', weight: 2, fillOpacity: 0.7 }
+                    }).addTo(map);
+                    map.fitBounds(geoJsonLayer.getBounds());
+
+                    geoJsonLayer.on('click', function(e) {
+                        var municipio = e.layer.feature.properties.nome;
+                        document.getElementById('municipio').innerText = municipio;
+                    });
+                } else {
+                    console.error('Nenhuma feição encontrada no shapefile dos Municípios.');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar o shapefile dos Municípios:', error);
+            }
+        }
+
+        // Carrega os Estados inicialmente
+        var extractPath = "/static"; // Caminho para a pasta onde os shapefiles estão armazenados
+        loadStateShapefile(extractPath);
+
+        // Função para nova consulta
+        function novaConsulta() {
+            fetch('/avaliador-perfil')
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/avaliador-perfil';
+                    } else {
+                        console.error('Erro ao realizar nova consulta.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao realizar nova consulta:', error);
+                });
+        }
+    </script>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Projeto PSA. Todos os direitos reservados.</p>
+            <p>Desenvolvido por <a href="#">Isabelly Bernardes</a></p>
+        </div>
+    </footer>
+</body>
+</html>
