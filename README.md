@@ -4,11 +4,16 @@ Breve descrição do que seu projeto faz.
 
 ## Tecnologias Usadas
 
-- Node.js
-- Express
-- Sequelize
-- EJS
-- PostgreSQL
+- Node.js: Ambiente de execução JavaScript no servidor.
+- Express: Framework para criar aplicações web no Node.js.
+- Sequelize: ORM (Object-Relational Mapping) para interagir com bancos de dados SQL, como PostgreSQL.
+- EJS: Motor de templates para renderização de HTML.
+- PostgreSQL: Sistema de banco de dados relacional.
+- bcryptjs: Biblioteca para criptografar senhas.
+- multer: Middleware para upload de arquivos.
+- pg: Cliente para PostgreSQL.
+- adm-zip e unzipper: Bibliotecas para manipulação de arquivos zip.
+- cpf-cnpj-validator: Biblioteca para validação de CPF.
 
 ## Como Executar o Projeto
 
