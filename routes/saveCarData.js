@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const upload = require('../upload'); // Certifique-se de que o caminho do upload está correto
+const { upload, extractAndFindShapefile } = require('../upload'); // Certifique-se de que o caminho do upload está correto
 const CarData = require('../models/car_data'); // Certifique-se de que o modelo está correto
 
 router.post('/saveCarData', upload.single('car_file'), async (req, res) => {
@@ -32,12 +32,19 @@ router.post('/saveCarData', upload.single('car_file'), async (req, res) => {
             return res.status(400).send('Número do CAR é obrigatório.');
         }
 
+        // Extração do shapefile, se o arquivo for um ZIP
+        const shapefilePath = await extractAndFindShapefile(carFilePath);
+        if (!shapefilePath) {
+            console.log('Erro: Nenhum shapefile encontrado no arquivo.');
+            return res.status(400).send('Nenhum shapefile encontrado no arquivo.');
+        }
+
         // Salva os dados no banco
         console.log('Salvando no banco...');
         await CarData.create({
             user_id: userId,
             car_number: carNumber,
-            car_file: carFilePath, // Caminho do arquivo na pasta uploads
+            car_file: shapefilePath, // Caminho do shapefile extraído
             status: 'Em análise', // Status padrão
         });
 
