@@ -4,6 +4,9 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Faz a altura total da página ocupar toda a janela */
 }
 
 /* Navbar verde */
@@ -109,7 +112,6 @@ h1 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
 /* Contêiner para o mapa e a box de informações */
 #map-container {
     display: flex; 
@@ -117,32 +119,39 @@ h1 {
     justify-content: flex-start; 
     gap: 20px; /* Adiciona um espaçamento entre a caixa de informações e o mapa */
     padding: 20px;
+    flex-grow: 1; /* Permite que o conteúdo ocupe o restante do espaço disponível */
 }
 
 /* Estilo para a caixa de informações */
 #info-box {
-    width: 20%; /* Caixa de informações ocupa 30% da largura da tela */
-    padding: 20px;
+    width: 25%; /* Reduzido de 30% para 25% da largura da tela */
+    max-width: 300px; /* Define um limite máximo para a largura */
+    padding: 15px; /* Ajustado para economizar espaço */
     background-color: rgba(255, 255, 255, 0.95);
     border: 1px solid #ddd;
-    height: 600px;
+    max-height: 500px; /* Mantém o limite da altura */
+    overflow-y: auto; /* Permite rolagem apenas se necessário */
     box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 #info-box h3 {
     margin-top: 0;
     color: #28a745; /* Cor verde */
+    font-size: 18px; /* Ajuste do tamanho do título */
 }
 
 #info-box p {
     margin: 10px 0;
+    font-size: 14px; /* Ajuste do tamanho da fonte */
+    word-wrap: break-word; /* Quebra de palavras longas */
 }
 
 /* Estilo para o mapa */
 #map {
-    width: 90%; 
-    height: 600px; /* Altura do mapa */
+    width: 85%; /* Aumentado para ocupar melhor o espaço disponível */
+    height: 500px; /* Mantendo a altura */
     border: 1px solid #ddd;
 }
 
@@ -165,6 +174,7 @@ button:hover {
     background-color: #45a049;
 }
 
+/* Estilo do Footer */
 .footer {
     background-color: #90ee90; /* Mesmo verde da navbar */
     color: #333; /* Texto com boa visibilidade */

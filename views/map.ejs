@@ -25,13 +25,20 @@
     <div id="map-container">
         <div id="info-box">
             <h3>Informações da Propriedade</h3>
-            <p><strong>CAR:</strong> <span id="CAR">....</span></p>
-            <p><strong>Estado:</strong> <span id="estado">...</span></p>
-            <p><strong>Município:</strong> <span id="municipio">...</span></p>
-            <p><strong>Outras informações:</strong> <span id="outras-informacoes">...</span></p>
+        
+            <% if (typeof carData !== 'undefined' && carData.length > 0) { %>
+                <p><strong>CAR:</strong> <span id="CAR"><%= carData[0].car_number %></span></p>
+                <p><strong>Estado:</strong> <span id="estado"></span></p>
+                <p><strong>Município:</strong> <span id="municipio"></span></p>
+                <p><strong>Outras informações:</strong> <span id="outras-informacoes"></span></p>
+            <% } else { %>
+                <p>Nenhum dado do CAR disponível.</p>
+            <% } %>
         </div>
+        
         <div id="map"></div>
     </div>
+    
 
     <button onclick="novaConsulta()">Voltar</button>
 

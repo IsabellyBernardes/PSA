@@ -400,9 +400,29 @@ router.get('/beneficiario-perfil', async (req, res) => {
   module.exports = router;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get('/map', (req, res) => {
-    res.render('map');  // Garante que o EJS para 'map' seja renderizado
+app.get('/map', async (req, res) => {
+    try {
+        // Consulta SQL para pegar os dados do CAR
+        const carDataResult = await sequelize.query(
+            `SELECT c.car_number, c.car_file, c.status
+             FROM car_data c
+             LEFT JOIN beneficiarios b ON b.id = c.user_id`,
+            {
+                type: sequelize.QueryTypes.SELECT
+            }
+        );
+
+        // Passa os dados para o template 'map', com o nome de 'carData'
+        console.log(carDataResult); // Verifique o conteúdo de carDataResult
+res.render('map', { carData: carDataResult });
+
+
+    } catch (error) {
+        console.error('Erro ao carregar dados do CAR:', error);
+        res.status(500).send('Erro ao carregar dados do CAR.');
+    }
 });
+
 
 
 // Inicia o servidor na porta 3000
