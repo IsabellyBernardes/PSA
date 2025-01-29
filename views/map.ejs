@@ -26,13 +26,14 @@
             <h3>Informações da Propriedade</h3>
             <% if (typeof carData !== 'undefined' && carData.length > 0) { %>
                 <p><strong>CAR:</strong> <span id="CAR"><%= carData[0].car_number %></span></p>
-                <p><strong>Estado:</strong> <span id="estado"></span></p>
-                <p><strong>Município:</strong> <span id="municipio"></span></p>
-                <p><strong>Outras informações:</strong> <span id="outras-informacoes"></span></p>
+                <p><strong>Estado:</strong> <span id="estado">Carregando...</span></p>
+                <p><strong>Município:</strong> <span id="municipio">Carregando...</span></p>
+                <!--<p><strong>Outras informações:</strong> <span id="outras-informacoes"></span></p>-->
             <% } else { %>
                 <p>Nenhum dado do CAR disponível.</p>
             <% } %>
         </div>
+        
         
         <div id="map"></div>
     </div>
@@ -72,7 +73,18 @@ async function loadShapefile(filePath, layerStyle) {
             console.log('GeoJSON carregado:', geojson);
 
             if (geojson.features && geojson.features.length > 0) {
-                const geoJsonLayer = L.geoJson(geojson, { style: layerStyle }).addTo(map);
+                const geoJsonLayer = L.geoJson(geojson, {
+                    style: layerStyle,
+                    onEachFeature: function (feature, layer) {
+                        // Extrair informações de estado e município
+                        if (feature.properties) {
+                            const estado = feature.properties.estado || feature.properties.State || "Estado desconhecido";
+                            const municipio = feature.properties.municipio || feature.properties.City || "Município desconhecido";
+                            document.getElementById('estado').innerText = estado;
+                            document.getElementById('municipio').innerText = municipio;
+                        }
+                    }
+                }).addTo(map);
                 map.fitBounds(geoJsonLayer.getBounds());
             } else {
                 console.error('Nenhuma feição encontrada no GeoJSON.');
@@ -88,7 +100,18 @@ async function loadShapefile(filePath, layerStyle) {
             console.log('GeoJSON gerado a partir do shapefile:', geojson);
 
             if (geojson.features && geojson.features.length > 0) {
-                const geoJsonLayer = L.geoJson(geojson, { style: layerStyle }).addTo(map);
+                const geoJsonLayer = L.geoJson(geojson, {
+                    style: layerStyle,
+                    onEachFeature: function (feature, layer) {
+                        // Extrair informações de estado e município
+                        if (feature.properties) {
+                            const estado = feature.properties.estado || feature.properties.State || "Estado desconhecido";
+                            const municipio = feature.properties.municipio || feature.properties.City || "Município desconhecido";
+                            document.getElementById('estado').innerText = estado;
+                            document.getElementById('municipio').innerText = municipio;
+                        }
+                    }
+                }).addTo(map);
                 map.fitBounds(geoJsonLayer.getBounds());
             } else {
                 console.error('Nenhuma feição encontrada no shapefile.');
@@ -98,6 +121,7 @@ async function loadShapefile(filePath, layerStyle) {
         console.error('Erro ao carregar o arquivo:', error);
     }
 }
+
 
 // Função para carregar a camada de estados
 async function loadStateLayer() {
