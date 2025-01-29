@@ -1,32 +1,13 @@
-/* Resetando margens e padding */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Definindo o estilo geral da página */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column; /* Alterado para garantir que o conteúdo fique abaixo da navbar */
-    height: 100vh;
-}
-
-/* Navbar */
+/* Estilização da Navbar */
 .navbar {
     display: flex;
     align-items: center;
     background-color: #90ee90;
     padding: 10px 20px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 10; /* Garante que a navbar fique sobre o conteúdo */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky; /* Mantém a navbar fixa */
+    top: 0; /* Fixa no topo da tela */
+    z-index: 1000; /* Garante que a navbar fique acima de outros elementos */
 }
 
 .logo {
@@ -35,16 +16,15 @@ body {
     gap: 10px;
 }
 
-.logo .logo-image {
-    height: auto;
-    max-height: 50px;
+.logo-image {
+    height: 40px;
     width: auto;
 }
 
 .logo-text {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #000000;
+    color: #333;
 }
 
 .logo-btn {
@@ -52,39 +32,57 @@ body {
     border: none;
 }
 
-/* Container do formulário de login */
-.container {
-    text-align: center;
-    background-color: white;
+/* Estilização do formulário */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px);
+    /* Subtrai a altura da navbar */
+    background-color: #f9f9f9;
+}
+
+.form-container {
+    background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 280px; /* Ajustado para um tamanho menor */
-    margin-top: 80px; /* Deixa espaço para a navbar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center; /* Centraliza todo o conteúdo, incluindo o título */
 }
 
-/* Título */
 h1 {
-    margin-bottom: 20px;
+    font-size: 1.5rem;
     color: #333;
+    margin-bottom: 20px;
+    text-align: center; /* Garante o alinhamento central */
 }
 
-/* Opções de login */
-.options {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+form label {
+    display: block;
+    text-align: left;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
 }
 
-/* Formulário */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+form input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
 }
 
-/* Ajustes do botão */
 form button {
+    width: 100%;
     padding: 10px;
     background-color: #4caf50;
     color: white;
@@ -98,13 +96,73 @@ form button:hover {
     background-color: #45a049;
 }
 
-/* Ajustes adicionais */
-main {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f9f9f9;
-    padding-top: 60px; /* Para garantir que o conteúdo comece abaixo da navbar */
+.options button {
+    width: 45%; /* Ajusta o tamanho para ocupar metade da largura */
+    padding: 10px;
+    background-color: #4caf50; /* Verde sólido */
+    color: white; /* Texto branco */
+    border: none;
+    border-radius: 25px; /* Bordas arredondadas */
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: uppercase; /* Texto em letras maiúsculas */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
 }
 
+/* Efeito hover nos botões */
+.options button:hover {
+    background-color: #45a049; /* Verde mais escuro no hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Destaque adicional no hover */
+}
+
+/* Centralização dos botões */
+.options {
+    display: flex;
+    flex-direction: row; /* Botões lado a lado */
+    justify-content: space-between; /* Espaçamento entre os botões */
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 20px; /* Margem superior para afastar do título */
+}
+
+.footer {
+    background-color: #90ee90; /* Mesmo verde da navbar */
+    color: #333; /* Texto com boa visibilidade */
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 20px; /* Espaçamento do conteúdo principal */
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto; /* Centraliza o conteúdo */
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .options {
+        flex-direction: column; /* Empilha os botões em uma coluna */
+        gap: 15px; /* Espaço maior entre os botões */
+    }
+
+    .options button {
+        width: 100%; /* Faz os botões ocuparem toda a largura no mobile */
+    }
+
+    .footer {
+        padding: 15px 5px;
+        font-size: 0.8rem;
+    }
+}

@@ -16,25 +16,27 @@ const { QueryTypes } = require('sequelize');
 const sequelize = require('./config/database');
 const upload = multer({ dest: 'uploads/' });
 const shapefile = require('shapefile');
+const CarData = require('./models/car_data');
+const saveCarDataRoute = require('./routes/saveCarData');
 
+
+// Sincroniza a tabela com o banco de dados
+CarData.sync({ alter: true }) // Apenas sincroniza alterações sem recriar a tabela
+    .then(() => {
+        console.log('Tabela car_data sincronizada com sucesso.');
+    })
+    .catch((error) => {
+        console.error('Erro ao sincronizar a tabela car_data:', error);
+    });
 
 
 sequelize.sync({ alter: true })  // Altera as tabelas sem perder os dados
   .then(() => {
-    console.log("Tabela 'beneficiarios' sincronizada!");
+    console.log("Tabela beneficiarios sincronizada!");
   })
   .catch((err) => {
     console.error("Erro ao sincronizar a tabela:", err);
   });
-
-sequelize.authenticate()
-    .then(() => {
-        console.log('Conexão com o banco de dados estabelecida com sucesso.');
-    })
-    .catch((error) => {
-        console.error('Não foi possível conectar ao banco de dados:', error);
-    });
-
 
 // Configurações de conexão com o banco de dados
 const app = express();
@@ -57,6 +59,13 @@ app.use(express.urlencoded({ extended: true })); // Para fazer o parse de dados 
 // Para servir arquivos estáticos, como CSS e imagens
 
 
+
+app._router.stack.forEach((layer) => {
+    if (layer.route) {
+        console.log(layer.route.path);
+    }
+});
+
 // Configuração do middleware de sessão
 app.use(session({
     secret: 'seu-segredo-aqui',  // Uma chave secreta para assinar a sessão
@@ -65,10 +74,14 @@ app.use(session({
     cookie: { secure: false }  // Altere para true se estiver usando HTTPS
 }));
 
+app.use('./uploads', express.static(path.join(__dirname, './uploads')));
+
+// Usando a rota salva em saveCarData
+app.use('/', saveCarDataRoute); // O prefixo pode ser ajustado conforme necessário
+
 app.get('/', (req, res) => {
     res.render('index');
 });
-
 
 // Função de validação personalizada de CPF 
 function validateCPF(cpf) { 
@@ -159,8 +172,6 @@ app.post('/cadastro/beneficiario', async (req, res) => {
     }
 });
 
-
-
 // Rota para exibir a página de seleção de tipo de login
 app.get('/login-type', (req, res) => {
     res.render('login-type');
@@ -199,7 +210,7 @@ app.post('/login/beneficiario', async (req, res) => {
     }
 
     // Login bem-sucedido
-    req.session.user_id = usuario.id;  // Armazena o ID do beneficiário na sessão
+    req.session.user_id = usuario.id; // Exemplo de como salvar o ID do usuário na sessão
     res.redirect('/beneficiario-perfil');  // Redireciona para o perfil do beneficiário
 });
 
@@ -243,20 +254,7 @@ app.get('/beneficiario-perfil', async (req, res) => {
     res.render('beneficiario-perfil', { usuario: usuario, carData: carData.car_number ? carData : null });
 
 });
-
-
-
-
-// Rota para fazer logout
-router.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).send('Erro ao fazer logout.');
-      }
-      res.redirect('/login');  // Redireciona de volta para o login
-    });
-  });
-  
+ 
 
 // Lógica para o login do Avaliador //TODO
 app.post('/login/avaliador-perfil', async (req, res) => {
@@ -375,6 +373,7 @@ router.get('/beneficiario-perfil', async (req, res) => {
     try {
       // Pegando o e-mail do beneficiário do usuário logado
       const email = req.session.email;  // Ou a variável que você usa para identificar o usuário logado
+      req.session.user_id = usuario.id; // Exemplo de como salvar o ID do usuário na sessão 
   
       // Encontrar o beneficiário com esse e-mail
       const beneficiario = await Beneficiario.findOne({
@@ -400,32 +399,6 @@ router.get('/beneficiario-perfil', async (req, res) => {
   
   module.exports = router;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Defina a configuração do multer
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/'); // Define a pasta de destino
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname); // Salva com o nome original
-    }
-  });
-  
-  // Rota para salvar o arquivo
-  app.post('/saveCarData', upload.single('car_file'), (req, res) => {
-      console.log('Arquivo recebido:', req.file);
-      console.log('Car Number:', req.body.carNumber);
-  
-      // Verificar se o arquivo ZIP foi realmente carregado
-      if (!req.file || !fs.existsSync(req.file.path)) {
-          console.log('Erro: Arquivo ZIP não encontrado!');
-          return res.status(400).send('Erro: Nenhum arquivo ZIP recebido.');
-      }
-  
-      console.log('Arquivo movido para:', req.file.path);
-      res.send('Arquivo ZIP recebido e salvo com sucesso!');
-  });
-
-
 
 app.get('/map', (req, res) => {
     res.render('map');  // Garante que o EJS para 'map' seja renderizado

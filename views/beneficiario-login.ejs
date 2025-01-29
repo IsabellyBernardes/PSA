@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Beneficiário</title>
-    <link rel="stylesheet" href="/static/login.css">
+    <link rel="stylesheet" href="/static/login-type.css">
 </head>
 <body>
     <nav class="navbar">
@@ -17,12 +17,7 @@
         <div class="form-container">
             <h1>Entrar como beneficiário</h1>
 
-            <!-- Mostrar erro, se houver -->
-            <% if (typeof error !== 'undefined') { %>
-                <script>
-                    alert('<%= error %>');
-                </script>
-            <% } %>
+            
 
             <form action="/login/beneficiario" method="POST">
                 <label for="email">Email</label>

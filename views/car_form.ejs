@@ -24,21 +24,17 @@
     <main>
         <section class="form-container">
             <h2>Cadastro de Propriedade</h2>
-            <!-- O formulário que será enviado para a rota /saveCarData -->
+
             <form method="POST" enctype="multipart/form-data" action="/saveCarData">
                 <div class="input-group">
                     <label for="carNumber">Número do CAR</label>
-                    <!-- Aqui, o nome do input permanece igual -->
                     <input type="text" id="carNumber" name="carNumber" required>
                 </div>
-
                 <div class="input-group">
-                    <label for="carFile">Arquivo ZIP</label>
-                    <!-- O input para o arquivo ZIP -->
+                    <label for="car_file">Arquivo ZIP</label>
                     <input type="file" id="carFile" name="car_file" accept=".zip" required>
                     <button type="submit" class="btn">Enviar</button>
                 </div>
-
                 
             </form>
         </section>
