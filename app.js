@@ -18,6 +18,7 @@ const upload = multer({ dest: 'uploads/' });
 const shapefile = require('shapefile');
 const CarData = require('./models/car_data');
 const saveCarDataRoute = require('./routes/saveCarData');
+const shapefilePath = '/uploads/../Area_do_Imovel/Area_do_Imovel.shp';
 
 
 // Sincroniza a tabela com o banco de dados
@@ -56,15 +57,7 @@ app.use(bodyParser.json());
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Para fazer o parse de dados do formulário
-// Para servir arquivos estáticos, como CSS e imagens
-
-
-
-app._router.stack.forEach((layer) => {
-    if (layer.route) {
-        console.log(layer.route.path);
-    }
-});
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Configuração do middleware de sessão
 app.use(session({
@@ -82,6 +75,53 @@ app.use('/', saveCarDataRoute); // O prefixo pode ser ajustado conforme necessá
 app.get('/', (req, res) => {
     res.render('index');
 });
+// Para servir arquivos estáticos, como CSS e imagens
+
+app.get('/uploads/:folder/:file', (req, res) => {
+    const { folder, file } = req.params;
+    const filePath = path.join(__dirname, 'uploads', folder, file);
+    
+    console.log(`Tentando servir: ${filePath}`);  // LOG SERVIDOR
+
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.error('Erro ao servir arquivo:', err);
+            res.status(404).send('Arquivo não encontrado.');
+        } else {
+            console.log('Arquivo servido com sucesso:', filePath);
+        }
+    });
+});
+
+app.get('/shapefile', (req, res) => {
+    const basePath = path.join(__dirname, 'uploads');
+
+    // Listar pastas dentro de 'uploads'
+    const subfolders = fs.readdirSync(basePath).filter(f => fs.statSync(path.join(basePath, f)).isDirectory());
+
+    if (subfolders.length > 0) {
+        const dynamicFolder = subfolders[0]; // Pega a primeira pasta encontrada
+        const shapefilePath = path.join(basePath, dynamicFolder, 'Area_do_Imovel', 'Area_do_Imovel.shp');
+
+        console.log('Caminho gerado:', shapefilePath);
+
+        if (fs.existsSync(shapefilePath)) {
+            res.sendFile(shapefilePath);
+        } else {
+            res.status(404).send('Shapefile não encontrado');
+        }
+    } else {
+        res.status(404).send('Nenhuma pasta encontrada dentro de uploads');
+    }
+});
+
+app._router.stack.forEach((layer) => {
+    if (layer.route) {
+        console.log(layer.route.path);
+    }
+});
+
+
 
 // Função de validação personalizada de CPF 
 function validateCPF(cpf) { 
@@ -399,30 +439,84 @@ router.get('/beneficiario-perfil', async (req, res) => {
   
   module.exports = router;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const uploadPath = path.join(__dirname, 'uploads');
+fs.readdir(uploadPath, (err, files) => {
+    if (err) {
+        console.error('Erro ao ler o diretório uploads:', err);
+    } else {
+        console.log('Conteúdo do diretório uploads:', files);
+    }
+});
+
 
 app.get('/map', async (req, res) => {
     try {
-        // Consulta SQL para pegar os dados do CAR
         const carDataResult = await sequelize.query(
             `SELECT c.car_number, c.car_file, c.status
              FROM car_data c
              LEFT JOIN beneficiarios b ON b.id = c.user_id`,
-            {
-                type: sequelize.QueryTypes.SELECT
-            }
+            { type: sequelize.QueryTypes.SELECT }
         );
 
-        // Passa os dados para o template 'map', com o nome de 'carData'
-        console.log(carDataResult); // Verifique o conteúdo de carDataResult
-res.render('map', { carData: carDataResult });
-
-
+        const shapefilePath = '/uploads/PE-2607208-AC496DB43C43418B86901B079BD89BF4/Area_do_Imovel/Area_do_Imovel.geojson';
+        console.log('Caminho do shapefile no backend:', shapefilePath);
+        res.render('map', { carData: carDataResult, shapefilePath: shapefilePath });
     } catch (error) {
         console.error('Erro ao carregar dados do CAR:', error);
         res.status(500).send('Erro ao carregar dados do CAR.');
     }
 });
 
+
+
+
+
+app.post('/upload', upload.single('car_file'), (req, res) => {
+    // Caminho para a pasta onde os arquivos já podem estar descompactados
+    const extractPath = path.join(__dirname, './uploads', 'Area_do_Imovel');
+    
+    // Verificar se o arquivo .shp já existe na pasta
+    const shpFilePath = findShapefile(extractPath);
+
+    if (shpFilePath) {
+        // Se o arquivo .shp já existir, carregue-o no mapa
+        loadShapefile(shpFilePath, res);
+    } else {
+        // Caso o arquivo .shp não exista, podemos processar o arquivo ZIP
+        const zipFilePath = path.join(__dirname, './uploads', req.file.filename);
+        // Descompactar e buscar o .shp dentro do arquivo ZIP
+        extractAndFindShapefile(zipFilePath, res);
+    }
+});
+
+
+// Função para carregar o shapefile dos estados
+async function loadStateShapefile(directory) {
+    const stateFile = '/static/BR_UF_2023/BR_UF_2023.shp';  // Caminho correto
+    console.log('Carregando arquivo do Estado:', stateFile);
+
+    try {
+        const stateBuffer = await fetch(stateFile).then(response => response.arrayBuffer());
+        const geojson = await shapefile.read(stateBuffer);
+
+        if (geojson.features && geojson.features.length > 0) {
+            const geoJsonLayer = L.geoJson(geojson, {
+                style: { fillColor: '#007bff', weight: 2, fillOpacity: 0.5 }
+            }).addTo(map);
+            map.fitBounds(geoJsonLayer.getBounds());
+
+            geoJsonLayer.on('click', function (e) {
+                var estado = e.layer.feature.properties.sigla;
+                document.getElementById('estado').innerText = estado;
+                loadMunicipalityShapefile(directory, estado); // Carrega os Municípios quando um Estado for clicado
+            });
+        } else {
+            console.error('Nenhuma feição encontrada no shapefile dos Estados.');
+        }
+    } catch (error) {
+        console.error('Erro ao carregar o shapefile dos Estados:', error);
+    }
+}
 
 
 // Inicia o servidor na porta 3000
