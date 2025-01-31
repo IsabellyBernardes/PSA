@@ -458,7 +458,8 @@ app.get('/map', async (req, res) => {
             { type: sequelize.QueryTypes.SELECT }
         );
 
-        const shapefilePath = '/uploads/PE-2607208-AC496DB43C43418B86901B079BD89BF4/Area_do_Imovel/Area_do_Imovel.geojson';
+        //const shapefilePath = '/uploads/PE-2607208-AC496DB43C43418B86901B079BD89BF4/Area_do_Imovel/Area_do_Imovel.geojson';
+        const shapefilePath = '/uploads/PE-2613701-E32A97E7369045488FF01F8DDAE61A6F/Area_do_Imovel/Area_do_Imovel.geojson';
         console.log('Caminho do shapefile no backend:', shapefilePath);
         res.render('map', { carData: carDataResult, shapefilePath: shapefilePath });
     } catch (error) {

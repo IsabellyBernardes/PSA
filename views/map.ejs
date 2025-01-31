@@ -130,19 +130,33 @@ async function loadStateLayer() {
         fillColor: '#007bff',
         color: '#007bff',  // Cor da borda
         weight: 2,
-        fillOpacity: 0.5
+        fillOpacity: 0.3
     };
     await loadShapefile(stateFilePath, stateLayerStyle);
 }
 
+// Função para carregar a camada de conservação
+async function loadPriorityLayer() {
+    const priorityFilePath = '/static/Areas_prioritarias/AreasPrioritarias.geojson';
+    const priorityLayerStyle = {
+        fillColor: '#7FFFD4',
+        color: '#008080',  // Cor da borda
+        weight: 2,
+        fillOpacity: 0.5
+    };
+    await loadShapefile(priorityFilePath, priorityLayerStyle);
+}
+
+
 // Função para carregar a camada do imóvel
 async function loadCarAreaLayer() {
-    const carFilePath = '/uploads/PE-2607208-AC496DB43C43418B86901B079BD89BF4/Area_do_Imovel/Area_do_Imovel.geojson';
+    //const carFilePath = '/uploads/PE-2607208-AC496DB43C43418B86901B079BD89BF4/Area_do_Imovel/Area_do_Imovel.geojson';
+    const carFilePath = '/uploads/PE-2613701-E32A97E7369045488FF01F8DDAE61A6F/Area_do_Imovel/Area_do_Imovel.geojson';
     const carLayerStyle = {
         fillColor: '#ff7800',
         color: '#ff7800',  // Cor da borda
         weight: 2,
-        fillOpacity: 0.5
+        fillOpacity: 0.0
     };
     await loadShapefile(carFilePath, carLayerStyle);
 }
@@ -150,6 +164,7 @@ async function loadCarAreaLayer() {
 // Carregar ambas as camadas juntas
 async function loadLayers() {
     await loadStateLayer();
+    await loadPriorityLayer();
     await loadCarAreaLayer();
 }
 

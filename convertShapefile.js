@@ -4,11 +4,18 @@ const shapefile = require('shapefile');
 
 // Defina o caminho para o seu arquivo .shp
 //const shapefilePath = path.join(__dirname, 'uploads', 'PE-2607208-AC496DB43C43418B86901B079BD89BF4', 'Area_do_Imovel', 'Area_do_Imovel.shp');
-const shapefilePath = path.join(__dirname, 'static', 'BR_UF_2023', 'BR_UF_2023.shp');
+const shapefilePath = path.join(__dirname, 'uploads', 'PE-2607208-AC496DB43C43418B86901B079BD89BF4', 'Area_do_Imovel', 'Area_do_Imovel.shp');
+
+//const shapefilePath = path.join(__dirname, 'static', 'BR_UF_2023', 'BR_UF_2023.shp');
+//const shapefilePath = path.join(__dirname, 'static', 'Areas_prioritarias', 'AreasPrioritarias.shp');
+
 
 // Defina o caminho para salvar o arquivo GeoJSON
 //const outputGeoJSONPath = path.join(__dirname, 'uploads', 'PE-2607208-AC496DB43C43418B86901B079BD89BF4', 'Area_do_Imovel', 'Area_do_Imovel.geojson');
-const outputGeoJSONPath = path.join(__dirname, 'static', 'BR_UF_2023', 'BR_UF_2023.geojson');
+const outputGeoJSONPath = path.join(__dirname, 'uploads', 'PE-2613701-E32A97E7369045488FF01F8DDAE61A6F', 'Area_do_Imovel', 'Area_do_Imovel.geojson');
+
+//const outputGeoJSONPath = path.join(__dirname, 'static', 'BR_UF_2023', 'BR_UF_2023.geojson');
+//const outputGeoJSONPath = path.join(__dirname, 'static', 'Areas_prioritarias', 'AreasPrioritarias.geojson');
 
 shapefile.read(shapefilePath)
     .then(geojson => {
