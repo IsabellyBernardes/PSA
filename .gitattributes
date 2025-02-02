@@ -1,3 +1,4 @@
 static/BR_Municipios_2023/BR_Municipios_2023.shp filter=lfs diff=lfs merge=lfs -text
 *.shp filter=lfs diff=lfs merge=lfs -text
 test-lfs.txt filter=lfs diff=lfs merge=lfs -text
+static/Solos_Embrapa_2011/Solos_Embrapa_2011.geojson filter=lfs diff=lfs merge=lfs -text
