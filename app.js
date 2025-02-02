@@ -259,7 +259,7 @@ app.get('/beneficiario-perfil', async (req, res) => {
     const usuarioId = req.session.user_id;
 
     if (!usuarioId) {
-        return res.redirect('/login/beneficiario');
+        return res.redirect('/login/beneficiario-login');
     }
 
     // Consulta com JOIN para buscar o beneficiário e os dados do formulário

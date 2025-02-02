@@ -28,6 +28,10 @@
                 <p><strong>CAR:</strong> <span id="CAR"><%= carData[0].car_number %></span></p>
                 <p><strong>Estado:</strong> <span id="estado">Carregando...</span></p>
                 <p><strong>Município:</strong> <span id="municipio">Carregando...</span></p>
+                <p><strong>Bioma:</strong> <span id="bioma">Carregando...</span></p>
+                <p><strong>Bacia hidrográfica:</strong> <span id="bacia_hidro">Carregando...</span></p>
+                <p><strong>Nível de importância biológica:</strong> <span id="import_bio">Carregando...</span></p>
+                <p><strong>Sugestão de ação:</strong> <span id="acao_principal">Carregando...</span></p>
                 <!--<p><strong>Outras informações:</strong> <span id="outras-informacoes"></span></p>-->
             <% } else { %>
                 <p>Nenhum dado do CAR disponível.</p>
@@ -135,16 +139,41 @@ async function loadStateLayer() {
     await loadShapefile(stateFilePath, stateLayerStyle);
 }
 
+// Função para carregar a camada de solos
+async function loadSoilLayer() {
+    const soilFilePath = '/static/Solos_Embrapa_2011/Solos_Embrapa_2011.geojson';
+    const soilLayerStyle = {
+        fillColor: '#F08080',
+        color: '#007bff',  // Cor da borda
+        weight: 2,
+        fillOpacity: 0.3
+    };
+    await loadShapefile(soilFilePath, soilLayerStyle);
+}
+
+
 // Função para carregar a camada de conservação
 async function loadPriorityLayer() {
     const priorityFilePath = '/static/Areas_prioritarias/AreasPrioritarias.geojson';
     const priorityLayerStyle = {
-        fillColor: '#7FFFD4',
-        color: '#008080',  // Cor da borda
+        fillColor: '#FF8C00',
+        color: '#FF8C00',  // Cor da borda
         weight: 2,
-        fillOpacity: 0.5
+        fillOpacity: 0.6
     };
     await loadShapefile(priorityFilePath, priorityLayerStyle);
+}
+
+// Função para carregar a camada de biomas
+async function loadBiomeLayer() {
+    const biomeFilePath = '/static/Biomas_IBGE_2019/Biomas_IBGE_2019.geojson';
+    const biomeLayerStyle = {
+        fillColor: '#66CDAA',
+        color: '#66CDAA',  // Cor da borda
+        weight: 2,
+        fillOpacity: 0.4
+    };
+    await loadShapefile(biomeFilePath, biomeLayerStyle);
 }
 
 
@@ -153,10 +182,10 @@ async function loadCarAreaLayer() {
     //const carFilePath = '/uploads/PE-2607208-AC496DB43C43418B86901B079BD89BF4/Area_do_Imovel/Area_do_Imovel.geojson';
     const carFilePath = '/uploads/PE-2613701-E32A97E7369045488FF01F8DDAE61A6F/Area_do_Imovel/Area_do_Imovel.geojson';
     const carLayerStyle = {
-        fillColor: '#ff7800',
-        color: '#ff7800',  // Cor da borda
+        fillColor: '#ADD8E6',
+        color: '#00008B',  // Cor da borda
         weight: 2,
-        fillOpacity: 0.0
+        fillOpacity: 0.2
     };
     await loadShapefile(carFilePath, carLayerStyle);
 }
@@ -164,6 +193,8 @@ async function loadCarAreaLayer() {
 // Carregar ambas as camadas juntas
 async function loadLayers() {
     await loadStateLayer();
+    await loadSoilLayer();
+    await loadBiomeLayer();
     await loadPriorityLayer();
     await loadCarAreaLayer();
 }
