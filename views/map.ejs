@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
     <title>Mapa para Análise de Imóvel</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="/static/map.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/shapefile@0.6.6/dist/shapefile.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 </head>
 <body>
     <div class="navbar">
@@ -29,9 +31,10 @@
                 <p><strong>Estado:</strong> <span id="estado">Carregando...</span></p>
                 <p><strong>Município:</strong> <span id="municipio">Carregando...</span></p>
                 <p><strong>Bioma:</strong> <span id="bioma">Carregando...</span></p>
+                <p><strong>Tipo do solo:</strong> <span id="solo">Carregando...</span></p>
                 <p><strong>Bacia hidrográfica:</strong> <span id="bacia_hidro">Carregando...</span></p>
                 <p><strong>Nível de importância biológica:</strong> <span id="import_bio">Carregando...</span></p>
-                <p><strong>Sugestão de ação:</strong> <span id="acao_principal">Carregando...</span></p>
+                <!--<p><strong>Sugestão de ação:</strong> <span id="acao_principal">Carregando...</span></p>-->
                 <!--<p><strong>Outras informações:</strong> <span id="outras-informacoes"></span></p>-->
             <% } else { %>
                 <p>Nenhum dado do CAR disponível.</p>
@@ -58,12 +61,12 @@
        const shapefilePath = '<%= shapefilePath %>';
     console.log('Caminho do shapefile no frontend:', shapefilePath);
     loadShapefile(shapefilePath);
+    
 
   
 
-
-// Função para carregar o shapefile
-async function loadShapefile(filePath, layerStyle) {
+    // Função para carregar o shapefile
+    async function loadShapefile(filePath, layerStyle) {
     try {
         console.log('Tentando carregar o arquivo:', filePath);
 
@@ -89,7 +92,7 @@ async function loadShapefile(filePath, layerStyle) {
                         }
                     }
                 }).addTo(map);
-                map.fitBounds(geoJsonLayer.getBounds());
+                
             } else {
                 console.error('Nenhuma feição encontrada no GeoJSON.');
             }
@@ -113,16 +116,67 @@ async function loadShapefile(filePath, layerStyle) {
                             const municipio = feature.properties.municipio || feature.properties.City || "Município desconhecido";
                             document.getElementById('estado').innerText = estado;
                             document.getElementById('municipio').innerText = municipio;
+                            console.log(`📌 Atualizando estado para: ${estado}`);
+                            console.log(`📌 Atualizando município para: ${municipio}`);
                         }
                     }
                 }).addTo(map);
-                map.fitBounds(geoJsonLayer.getBounds());
+                
             } else {
                 console.error('Nenhuma feição encontrada no shapefile.');
             }
         }
     } catch (error) {
         console.error('Erro ao carregar o arquivo:', error);
+    }
+}
+
+
+loadShapefile(shapefilePath);
+
+
+
+async function loadGeoJSON(url) {
+    const response = await fetch(url);
+    return await response.json();
+}
+
+function findIntersection(carGeoJSON, layerGeoJSON, propertyName) {
+    const feature = layerGeoJSON.features.find(f => turf.booleanIntersects(carGeoJSON, f));
+    return feature ? feature.properties[propertyName] : 'Não encontrado';
+}
+
+async function loadAndIntersect() {
+    try {
+        // Carregar o GeoJSON da área do CAR
+        const carGeoJSON = await loadGeoJSON('uploads/PE-2607208-AC496DB43C43418B86901B079BD89BF4/Area_do_Imovel/Area_do_Imovel.geojson'); // Substitua pelo caminho correto
+
+        // Carregar os GeoJSONs das camadas
+        const biomasGeoJSON = await loadGeoJSON('static/Biomas_IBGE_2019/Biomas_IBGE_2019.geojson'); // Substitua pelo caminho correto
+        const solosGeoJSON = await loadGeoJSON('static/Solos_Embrapa_2011/Solos_Embrapa_2011.geojson');
+        const baciasGeoJSON = await loadGeoJSON('static/Biomas_IBGE_2019/Biomas_IBGE_2019.geojson'); // Substitua pelo caminho correto
+        const importanciaGeoJSON = await loadGeoJSON('static/Areas_prioritarias/AreasPrioritarias.geojson'); // Substitua pelo caminho correto
+        //const acaoGeoJSON = await loadGeoJSON('static/Areas_prioritarias/AreasPrioritarias.geojson'); // Substitua pelo caminho correto
+
+        // Encontrar informações
+        const bioma = findIntersection(carGeoJSON, biomasGeoJSON, 'Bioma'); // Substitua 'nome' pela propriedade correta
+        const solo = findIntersection(carGeoJSON, solosGeoJSON, 'Dominio');
+        const baciaHidro = findIntersection(carGeoJSON, baciasGeoJSON, 'Bacia_Hidr'); // Substitua 'nome' pela propriedade correta
+        const importanciaBio = findIntersection(carGeoJSON, importanciaGeoJSON, 'Import_bio'); // Substitua 'nivel' pela propriedade correta
+        //const acaoPrincipal = findIntersection(carGeoJSON, acaoGeoJSON, 'Acao_Princ'); // Substitua 'sugestao' pela propriedade correta
+
+        // Atualizar a caixa de informações
+        document.getElementById('bioma').innerText = bioma;
+        document.getElementById('bacia_hidro').innerText = baciaHidro;
+        document.getElementById('import_bio').innerText = importanciaBio;
+        //document.getElementById('acao_principal').innerText = acaoPrincipal;
+        document.getElementById('solo').innerText = solo;
+
+        const carBounds = L.geoJson(carGeoJSON).getBounds();
+        map.fitBounds(carBounds);
+
+    } catch (error) {
+        console.error('Erro ao carregar ou processar os dados:', error);
     }
 }
 
@@ -136,6 +190,7 @@ async function loadStateLayer() {
         weight: 2,
         fillOpacity: 0.3
     };
+    
     await loadShapefile(stateFilePath, stateLayerStyle);
 }
 
@@ -179,13 +234,14 @@ async function loadBiomeLayer() {
 
 // Função para carregar a camada do imóvel
 async function loadCarAreaLayer() {
-    //const carFilePath = '/uploads/PE-2607208-AC496DB43C43418B86901B079BD89BF4/Area_do_Imovel/Area_do_Imovel.geojson';
-    const carFilePath = '/uploads/PE-2613701-E32A97E7369045488FF01F8DDAE61A6F/Area_do_Imovel/Area_do_Imovel.geojson';
+    
+    const carFilePath = '/uploads/PE-2613701-E32A97E7369045488FF01F8DDAE61A6F/Area_do_Imovel/Area_do_Imovel.geojson'; // Substitua pelo caminho correto
     const carLayerStyle = {
         fillColor: '#ADD8E6',
         color: '#00008B',  // Cor da borda
         weight: 2,
         fillOpacity: 0.2
+        
     };
     await loadShapefile(carFilePath, carLayerStyle);
 }
@@ -196,9 +252,9 @@ async function loadLayers() {
     await loadSoilLayer();
     await loadBiomeLayer();
     await loadPriorityLayer();
-    await loadCarAreaLayer();
+    await loadCarAreaLayer(); // Carrega a área do CAR por último e ajusta o mapa
 }
-
+loadAndIntersect();
 // Inicializa o carregamento das camadas
 loadLayers();
 
@@ -225,7 +281,7 @@ async function loadStateShapefile(directory) {
             const geoJsonLayer = L.geoJson(geojson, {
                 style: { fillColor: '#007bff', weight: 2, fillOpacity: 0.5 }
             }).addTo(map);
-            map.fitBounds(geoJsonLayer.getBounds());
+            
         } else {
             console.error('Nenhuma feição encontrada no shapefile dos Estados.');
         }
@@ -250,7 +306,7 @@ async function loadMunicipalityShapefile(directory, estado) {
             const geoJsonLayer = L.geoJson(geojson, {
                 style: { fillColor: '#ff7800', weight: 2, fillOpacity: 0.7 }
             }).addTo(map);
-            map.fitBounds(geoJsonLayer.getBounds());
+            
 
             geoJsonLayer.on('click', function (e) {
                 var municipio = e.layer.feature.properties.nome;

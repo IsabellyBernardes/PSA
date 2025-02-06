@@ -33,7 +33,8 @@ router.post('/saveCarData', upload.single('car_file'), async (req, res) => {
         }
 
         // Extração do shapefile, se o arquivo for um ZIP
-        const shapefilePath = await extractAndFindShapefile(carFilePath);
+        const shapefilePath = await extractAndFindShapefile(carFilePath, res);
+
         if (!shapefilePath) {
             console.log('Erro: Nenhum shapefile encontrado no arquivo.');
             return res.status(400).send('Nenhum shapefile encontrado no arquivo.');

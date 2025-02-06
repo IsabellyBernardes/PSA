@@ -1,0 +1,89 @@
+[33mcommit 830a28d76b1d3ed6603f9d034c1ac467a6f71c2a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Sun Feb 2 01:31:11 2025 -0300
+
+    solos
+
+[33mcommit d5af5ebc7b4e3a7617f6ca025ee1d4fd5d37b39b[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Sun Feb 2 01:29:38 2025 -0300
+
+    LFS
+
+[33mcommit b8aeb15891ec4f093e1b5e8580aad4618bc7298a[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Sun Feb 2 01:18:33 2025 -0300
+
+    novas camadas adicionadas
+
+[33mcommit b455e5f0bad1155f14550f5ebdd64e032049c581[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Fri Jan 31 14:11:31 2025 -0300
+
+    camada de conservacao adicionada
+
+[33mcommit 62b42a7ab8af26d8425181e99dd735c19ea6205f[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Wed Jan 29 18:53:56 2025 -0300
+
+    extrair salvo
+
+[33mcommit cf508d5a5a1225e41aee15102b73ddde8073f9cb[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Wed Jan 29 18:29:53 2025 -0300
+
+    info-box com estado e municipio sendo informados
+
+[33mcommit eec1de9ea1fa1bdf807011bd17c133e4c726807c[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Wed Jan 29 18:19:41 2025 -0300
+
+    mapa com geojson funcionando
+
+[33mcommit e55ba9db277d35a95cd16295cca27d8bb2d255ae[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Wed Jan 29 00:01:24 2025 -0300
+
+    map CAR funcionando
+
+[33mcommit 4f3b42196c70032dfec9d5baa19a03ab87f6b2dd[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Tue Jan 28 23:25:13 2025 -0300
+
+    upload funcionando
+
+[33mcommit aeed210949457100b6b17bb47901098650876297[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Tue Jan 28 19:00:33 2025 -0300
+
+    adicionado package-lock
+
+[33mcommit ae4269e8985678a06dff5b64a5a25965005a5915[m
+Author: IsabellyBernardes <113481194+IsabellyBernardes@users.noreply.github.com>
+Date:   Mon Jan 27 19:53:17 2025 -0300
+
+    Update README.md
+
+[33mcommit 7a200a908186cff73e8175c7862cf8023d05f6b3[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Mon Jan 27 15:27:42 2025 -0300
+
+    informações recuperadas
+
+[33mcommit 4dfa6c600108d085515d9d307b506ff17ff5f35a[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Mon Jan 27 15:09:39 2025 -0300
+
+    Initial commit with LFS support
+
+[33mcommit cea42bfe9e013e8266a08055622283ede2f2de2e[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Sat Jan 25 12:59:53 2025 -0300
+
+    Commit inicial
+
+[33mcommit 7fabcf3f2f578629e971e1858de13c99ae179e94[m
+Author: IsabellyBernardes <isabelly789.cb@gmail.com>
+Date:   Sat Jan 25 12:55:25 2025 -0300
+
+    Commit inicial
